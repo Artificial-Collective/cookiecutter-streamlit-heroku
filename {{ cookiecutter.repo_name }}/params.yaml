@@ -1,0 +1,7 @@
+#ADD PROJECT PARAMETERS HERE eg.
+
+raw_data_config:
+  data_csv: data/data.csv
+
+model_params:
+  max_depth: 10
