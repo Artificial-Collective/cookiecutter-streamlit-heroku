@@ -56,9 +56,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# DotEnv configuration
-.env
-
 # Database
 *.db
 *.rdb
@@ -83,3 +80,6 @@ target/
 
 # vim
 *.swp
+
+# DotEnv configuration
+# .env
