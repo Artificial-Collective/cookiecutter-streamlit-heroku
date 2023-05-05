@@ -4,6 +4,7 @@ Prerequisites:
 
 - [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
 - [pipenv](https://pipenv.pypa.io/en/latest/)
+- A Heroku app
 - A Microsoft web app as shown [here](https://learn.microsoft.com/en-us/azure/active-directory/develop/web-app-quickstart?tabs=windows&pivots=devlang-python)
 
 The redirect URI will be the URI for streamlit when running locally (eg http://localhost:8501/) and the link to the app for prod (something in the format https://YOURAPPNAMEHERE.herokuapp.com/)
