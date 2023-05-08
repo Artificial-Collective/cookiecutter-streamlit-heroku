@@ -11,5 +11,8 @@
     "python_interpreter": [
         "python3",
         "python"
-    ]
+    ],
+    "client_id": "Application (client) ID as seen in the azure portal",
+    "client_secret": "Secret value created for the app",
+    "tenant_id": "Directory (tenant) ID as seen in the azure portal",
 }
