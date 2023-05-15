@@ -15,4 +15,7 @@
     "client_id": "Application (client) ID as seen in the azure portal",
     "client_secret": "Secret value created for the app",
     "tenant_id": "Directory (tenant) ID as seen in the azure portal",
+    "_copy_without_render": [
+        ".github/*"
+    ]
 }
