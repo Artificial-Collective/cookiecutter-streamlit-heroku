@@ -24,7 +24,14 @@ def get_token_from_code(app: msal.ConfidentialClientApplication, auth_code: str)
 def get_user_info(access_token: str)->dict:
     headers = {'Authorization': f'Bearer {access_token}'}
     response = requests.get(
-        'https://graph.microsoft.com/v1.0/me/appRoleAssignments', headers=headers)
+        'https://graph.microsoft.com/v1.0/me/memberOf',
+        headers=headers
+    )
+    response = requests.get(
+        'https://graph.microsoft.com/v1.0/me',
+        headers=headers
+    )
+
     return response.json()
 
 
@@ -37,7 +44,7 @@ def handle_redirect(app: msal.ConfidentialClientApplication)->None:
             st.experimental_set_query_params()
 
 
-def login_step():
+def login_step()->msal.ConfidentialClientApplication:
     CLIENT_ID = os.environ['CLIENT_ID']
     CLIENT_SECRET = os.environ['CLIENT_SECRET']
     TENANT_ID = os.environ['TENANT_ID']
@@ -49,7 +56,6 @@ def login_step():
         authority=AUTHORITY,
         client_credential=CLIENT_SECRET
     )
-
     if st.experimental_get_query_params().get('code'):
         handle_redirect(app)
 
@@ -58,10 +64,18 @@ def login_step():
     if access_token:
         user_info = get_user_info(access_token)
         st.session_state['user_info'] = user_info
-        return True
+        return app
     else:
-        st.write("Please sign-in to use this app.")
         auth_url = get_auth_url(app)
-        st.markdown(
-            f"<a href='{auth_url}' target='_self'>Sign In</a>", unsafe_allow_html=True)
+        if st.button('Login'):
+            st.markdown(
+                f"<meta http-equiv='refresh' content='0;url={auth_url}'>",
+                unsafe_allow_html=True
+            )
         st.stop()
+
+def logout_flow(app: msal.ConfidentialClientApplication):
+    home_accounts = app.get_accounts(st.session_state['user_info']['userPrincipalName'])
+    for home_account in home_accounts:
+        app.remove_account(home_account)
+    del st.session_state['access_token']
